@@ -11,5 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
+/*
+* TODO Verificar si la falta de archivos map.js causa un problema.
+* Puede que la falta de estos archivo afecte al funcionamiento de algunos modulos
+* de NodeJS que los incluyen.
+* */
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/scss/app.scss', 'public/css');

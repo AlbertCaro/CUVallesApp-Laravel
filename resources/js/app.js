@@ -5,8 +5,22 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
+window.$ = window.jQuery = require('jquery');
+window.chart = require('chart.js');
+require('./argon');
+require('bootstrap');
+require('bootstrap-datepicker');
+require('clipboard');
+require('anchor-js');
+require('headroom.js');
+require('holderjs');
+require('jquery.scrollbar');
+require('jquery-scroll-lock');
+require('nouislider');
+require('onscreen');
+require('prismjs');
+require('@fortawesome/fontawesome-free');
+window.swal = require('sweetalert2');
 window.Vue = require('vue');
 
 /**
@@ -14,9 +28,8 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
+/*
 const app = new Vue({
     el: '#app'
 });
+*/
