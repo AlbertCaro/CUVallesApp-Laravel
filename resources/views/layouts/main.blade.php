@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Argon CSS -->
     <link type="text/css" href="{{ asset('css/app.css') }}?v=1.0.0" rel="stylesheet">
+    <script type="text/javascript" src="{{asset('js/consts.js')}}"></script>
 </head>
 
 <body class="@yield('bg')">

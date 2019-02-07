@@ -181,7 +181,7 @@
                   <img alt="Image placeholder" src="{{ asset('img/theme/team-4-800x800.jpg') }}">
                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
-                                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->fullname }}</span>
+                                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user() }}</span>
                                 </div>
                             </div>
                         </a>
@@ -225,7 +225,7 @@
     @yield('header')
     <!-- Page content -->
     <div class="container-fluid mt--7">
-        <div class="row">
+        <div class="row" id="app">
             @yield('content')
         </div>
         @include('layouts.footer')

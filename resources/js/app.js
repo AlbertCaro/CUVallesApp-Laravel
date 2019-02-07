@@ -1,12 +1,9 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
+/*eslint-disable not-new*/
 window.$ = window.jQuery = require('jquery');
 window.chart = require('chart.js');
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+Vue.prototype.$axios = window.axios;
 require('./argon');
 require('bootstrap');
 require('bootstrap-datepicker');
@@ -20,16 +17,46 @@ require('nouislider');
 require('onscreen');
 require('prismjs');
 require('@fortawesome/fontawesome-free');
-window.swal = require('sweetalert2');
-window.Vue = require('vue');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-/*
-const app = new Vue({
-    el: '#app'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import VueSweetalert2 from 'vue-sweetalert2';
+import VeeValidate, { Validator } from 'vee-validate';
+import esLocale from 'vee-validate/dist/locale/es';
+
+Vue.use(VueRouter);
+Vue.use(VueSweetalert2);
+Vue.use(VeeValidate);
+Validator.localize('es', esLocale);
+
+const App = Vue.component('main-component', require('./components/app/Main'));
+const placeIndex= Vue.component('place-index', require('./components/place/Index'));
+const placeCreate= Vue.component('place-create', require('./components/place/Create'));
+const placeEdit= Vue.component('place-edit', require('./components/place/Edit'));
+
+const routes = [
+    {
+        name: 'place-index',
+        path: '/place',
+        component: placeIndex
+    },
+    {
+        name: 'place-create',
+        path: '/place/create',
+        component: placeCreate
+    },
+    {
+        name: 'place-edit',
+        path: '/place/:id/edit',
+        component: placeEdit
+    },
+];
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: routes
 });
-*/
+
+new Vue({
+    router
+}).$mount('#app');
