@@ -76,6 +76,7 @@ class PlaceController extends Controller
                 ->resize(100, 100)
                 ->save(public_path('images/places/') . $name);
         }
+
         $place->update($data);
     }
 

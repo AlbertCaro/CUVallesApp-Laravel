@@ -46,7 +46,7 @@
                         <div class="col-md-3">
                             <label for="longitud">Longitud</label>
                             <div class="form-group" :class="{'has-danger': errors.has('longitud')}">
-                                <input type="number" id="longitud" name="longitud" class="form-control form-control-alternative" placeholder="longitud"
+                                <input type="number" id="longitud" name="longitud" class="form-control form-control-alternative" placeholder="longitud" step="any"
                                        v-validate="'required'"
                                        v-model="form.longitud">
                                 <small class="text-danger">{{ errors.first('longitud') }}</small>
@@ -55,7 +55,7 @@
                         <div class="col-md-3">
                             <label for="latitud">Latitud</label>
                             <div class="form-group" :class="{'has-danger': errors.has('latitud')}">
-                                <input type="number" id="latitud" name="latitud" class="form-control form-control-alternative" placeholder="latitud"
+                                <input type="number" id="latitud" name="latitud" class="form-control form-control-alternative" placeholder="latitud" step="any"
                                        v-validate="'required'"
                                        v-model="form.latitud">
                                 <small class="text-danger">{{ errors.first('latitud') }}</small>

@@ -91598,7 +91598,8 @@ var render = function() {
                         type: "number",
                         id: "longitud",
                         name: "longitud",
-                        placeholder: "longitud"
+                        placeholder: "longitud",
+                        step: "any"
                       },
                       domProps: { value: _vm.form.longitud },
                       on: {
@@ -91648,7 +91649,8 @@ var render = function() {
                         type: "number",
                         id: "latitud",
                         name: "latitud",
-                        placeholder: "latitud"
+                        placeholder: "latitud",
+                        step: "any"
                       },
                       domProps: { value: _vm.form.latitud },
                       on: {
@@ -92201,7 +92203,8 @@ var render = function() {
                         type: "number",
                         id: "longitud",
                         name: "longitud",
-                        placeholder: "longitud"
+                        placeholder: "longitud",
+                        step: "any"
                       },
                       domProps: { value: _vm.form.longitud },
                       on: {
@@ -92251,7 +92254,8 @@ var render = function() {
                         type: "number",
                         id: "latitud",
                         name: "latitud",
-                        placeholder: "latitud"
+                        placeholder: "latitud",
+                        step: "any"
                       },
                       domProps: { value: _vm.form.latitud },
                       on: {
