@@ -19,9 +19,9 @@ class CreatePlaceTable extends Migration
             $table->string('descripcion');
             $table->string('encargado');
             $table->string('extension');
-            $table->float('logitud');
+            $table->float('longitud');
             $table->float('latitud');
-            $table->string('foto');
+            $table->string('foto')->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@
                         <th scope="col">Lugar</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
+                        <th scope="col">Encargado</th>
                         <th scope="col">Extensión</th>
                         <th scope="col"></th>
                     </tr>
@@ -26,7 +27,7 @@
                         <th scope="row">
                             <div class="media align-items-center">
                                 <a href="#" class="avatar rounded-circle mr-3">
-                                    <img alt="Image placeholder" src="">
+                                    <img alt="Image placeholder">
                                 </a>
                                 <div class="media-body">
                                     <span class="mb-0 text-sm"></span>

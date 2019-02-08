@@ -5,7 +5,7 @@
                 <h3 class="mb-0">Agregar nuevo lugar</h3>
             </div>
             <div class="card-body">
-                <form method="post" v-on:submit.prevent="onCreate">
+                <form method="POST" v-on:submit.prevent="onCreate" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-5">
                             <label for="nombre">Nombre de lugar</label>
@@ -64,15 +64,15 @@
                         <div class="col-md-6">
                             <label for="foto">Imagen del lugar</label>
                             <div class="form-group" :class="{'has-danger': errors.has('foto')}">
-                                <input type="file" name="foto" id="foto" class="form-control-file"
-                                v-validate="'required'"
-                                >
+                                <input type="file" id="foto" name="foto" class="form-control-file" lang="es"
+                                       v-validate="'required'"
+                                       @change="onImageChange">
                                 <small class="text-danger">{{ errors.first('foto') }}</small>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-info" type="submit">Guardar</button>
+                        <button class="btn btn-success" type="submit">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -89,22 +89,49 @@
                     nombre:'',
                     descripcion:'',
                     encargado:'',
-                    extension: '',
+                    extension:'',
                     longitud:'',
                     latitud:'',
                     foto:''
+
                 }
             }
         },
         methods: {
+            onImageChange(e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createImage(files[0]);
+            },
+            createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.form.foto = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            /*uploadImage(){
+                axios.post('/place', this.form).then(response => {
+                    console.log(response);
+                });
+            },*/
             onCreate() {
                 this.$validator.validateAll().then((result) => {
+
                     if (result) {
+                        //const config = {headers: { 'content-type': 'multipart/form-data' }};
+                        this.$axios.post('/place', this.form).then(() => {
+                            this.$swal(toastSuccess);
+                            this.$router.push({name: 'place-index'});
+                        });
 
                     } else
                         this.$swal(toastError);
                 });
             },
+
         }
     }
 </script>
