@@ -27,7 +27,7 @@
                         <th scope="row">
                             <div class="media align-items-center">
                                 <a href="#" class="avatar rounded-circle mr-3">
-                                    <img alt="Image placeholder">
+                                    <img alt="Image placeholder" :src="'/images/places/'+place.foto">
                                 </a>
                                 <div class="media-body">
                                     <span class="mb-0 text-sm"></span>
@@ -44,8 +44,8 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a class="dropdown-item" href="#">Editar</a>
-                                    <a class="dropdown-item" v-on:click="onDelete(place.id, place)">Eliminar</a>
+                                    <router-link class="dropdown-item text-success" v-bind:to="{name: 'place-edit', params:{id: place.id}}">Editar</router-link>
+                                    <a class="dropdown-item text-danger" v-on:click="onDelete(place.id, place)">Eliminar</a>
                                 </div>
                             </div>
                         </td>

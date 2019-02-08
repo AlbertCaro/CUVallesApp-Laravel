@@ -7,7 +7,6 @@ use Intervention\Image\Facades\Image;
 
 class PlaceController extends Controller
 {
-
     public function index(Request $request)
     {
         if ($request->ajax())
@@ -25,9 +24,10 @@ class PlaceController extends Controller
 
         if($request->get('foto'))
         {
-            $image = $request->get('foto');
-            $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            Image::make($request->get('foto'))->save(public_path('img/places/').$name);
+            $name= $request->get('nombre').'.jpg';
+            Image::make($request->get('foto'))
+                ->resize(100, 100)
+                ->save(public_path('images/places/').$name);
         }
         Place::create([
             'nombre' => $request->nombre,
@@ -45,18 +45,47 @@ class PlaceController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        if($request->ajax())
+            return Place::find($id);
+        return view('place.edit');
     }
+
 
     public function update(Request $request, $id)
     {
-        //
+        $place = Place::findOrFail($id);
+        $data = [
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'encargado' => $request->encargado,
+            'extension' => $request->extension,
+            'longitud' => $request->longitud,
+            'latitud' => $request->latitud,
+        ];
+        if (!is_null($request->get('foto')))
+        {
+            $name = $request->get('nombre').'.jpg';
+            if(file_exists(public_path('images/places/') . $place->foto))
+            {
+                unlink(public_path('images/places/') . $place->foto);
+            }
+            $data = $data + ['foto' => $name];
+            Image::make($request->get('foto'))
+                ->resize(100, 100)
+                ->save(public_path('images/places/') . $name);
+        }
+        $place->update($data);
     }
 
     public function destroy($id)
     {
-        Place::find($id)->delete();
+        $place = Place::findOrFail($id);
+        if(file_exists(public_path('images/places/').$place->foto))
+        {
+            unlink(public_path('images/places/') . $place->foto);
+        }
+        $place->delete();
     }
 }

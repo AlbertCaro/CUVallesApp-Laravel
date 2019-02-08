@@ -112,16 +112,10 @@
                 };
                 reader.readAsDataURL(file);
             },
-            /*uploadImage(){
-                axios.post('/place', this.form).then(response => {
-                    console.log(response);
-                });
-            },*/
             onCreate() {
                 this.$validator.validateAll().then((result) => {
 
                     if (result) {
-                        //const config = {headers: { 'content-type': 'multipart/form-data' }};
                         this.$axios.post('/place', this.form).then(() => {
                             this.$swal(toastSuccess);
                             this.$router.push({name: 'place-index'});
