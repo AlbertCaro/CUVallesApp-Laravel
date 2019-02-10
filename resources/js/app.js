@@ -30,6 +30,7 @@ Vue.use(VeeValidate);
 Validator.localize('es', esLocale);
 
 const App = Vue.component('main-component', require('./components/app/Main'));
+Vue.component('pagination', require('laravel-vue-pagination'));
 const placeIndex= Vue.component('place-index', require('./components/place/Index'));
 const placeCreate= Vue.component('place-create', require('./components/place/Create'));
 const placeEdit= Vue.component('place-edit', require('./components/place/Edit'));

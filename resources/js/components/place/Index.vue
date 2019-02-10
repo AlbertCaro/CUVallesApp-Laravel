@@ -6,7 +6,9 @@
                     <router-link class="btn btn-primary" :to="{path: '/place/create'}">Nuevo</router-link>
                 </div>
                 <div class="form-group align-content-end">
-                    <input type="text" id="search" name="search" v-model="search" class="form-control col-md-5" placeholder="buscar...">
+                    <input type="text" id="search" name="search" class="form-control col-md-5" placeholder="buscar..."
+                           v-model="search"
+                           v-on:keyup="onSearch">
                 </div>
                 <h3 class="mb-0">Lugares registrados</h3>
             </div>
@@ -22,8 +24,8 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
-                    <tbody v-if="filteredPlace.length !== 0">
-                    <tr v-for="place in filteredPlace">
+                    <tbody>
+                    <tr v-for="place in places.data" :key="place.id">
                         <th scope="row">
                             <div class="media align-items-center">
                                 <a href="#" class="avatar rounded-circle mr-3">
@@ -51,14 +53,12 @@
                         </td>
                     </tr>
                     </tbody>
-                    <tr v-else>
-                        <td><strong>No se encotraron resultados.</strong></td>
-                    </tr>
                 </table>
-
             </div>
             <div class="card-footer py-4">
-
+                <div class="pagination justify-content-center">
+                    <pagination :data="places" @pagination-change-page="getResults"></pagination>
+                </div>
             </div>
         </div>
     </div>
@@ -69,14 +69,12 @@
     export default {
         data(){
           return {
-              places:[],
-              search:''
+              places: {},
+              search: ''
           }
         },
         created() {
-            this.$axios.get('/place').then((response) => {
-                this.places = response.data;
-            });
+            this.getResults();
         },
         methods: {
             onDelete(id, element){
@@ -85,18 +83,23 @@
                         let url = '/place/'.concat(id);
                         this.$axios.delete(url).then(()=>{
                             this.$swal(toastDelete);
-                            this.places.splice(this.places.indexOf(element), 1)
+                            this.places.data.splice(this.places.data.indexOf(element), 1)
                         })
                     }
                 });
-            }
-        },
-        computed: {
-            filteredPlace(){
-                return this.places.filter((place) => {
-                    return place.nombre.match(this.search);
+            },
+            getResults(page = 1){
+                this.$axios.get(`/place?page=${page}`).then(response => {
+                    this.places = response.data;
                 });
+            },
+            onSearch(){
+                if (this.search !=='')
+                    this.$axios.get(`/place/search/${this.search}`).then(response => { this.places = response.data; });
+                else
+                    this.getResults();
             }
         }
     }
 </script>
+

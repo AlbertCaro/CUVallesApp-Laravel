@@ -10,7 +10,10 @@ class PlaceController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax())
-            return Place::all()->jsonSerialize();
+        {
+            return response()->json(Place::paginate(5));
+        }
+
         return view('place.index');
     }
 
@@ -67,10 +70,12 @@ class PlaceController extends Controller
         if (!is_null($request->get('foto')))
         {
             $name = $request->get('nombre').'.jpg';
+
             if(file_exists(public_path('images/places/') . $place->foto))
             {
                 unlink(public_path('images/places/') . $place->foto);
             }
+
             $data = $data + ['foto' => $name];
             Image::make($request->get('foto'))
                 ->resize(100, 100)
@@ -83,10 +88,19 @@ class PlaceController extends Controller
     public function destroy($id)
     {
         $place = Place::findOrFail($id);
+
         if(file_exists(public_path('images/places/').$place->foto))
         {
             unlink(public_path('images/places/') . $place->foto);
         }
+
         $place->delete();
+    }
+
+    public function search(Request $request)
+    {
+        return response()->json(Place::where('nombre', 'LIKE', "%{$request->search}%")
+                ->orWhere('encargado', 'LIKE', "%{$request->search}%")
+                ->paginate(5));
     }
 }
