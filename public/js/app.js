@@ -90892,6 +90892,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -90910,8 +90915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$swal(swalConfirmDelete).then(function (result) {
                 if (result.value) {
-                    var url = '/place/'.concat(id);
-                    _this.$axios.delete(url).then(function () {
+                    _this.$axios.delete('/place/' + id).then(function () {
                         _this.$swal(toastDelete);
                         _this.places.data.splice(_this.places.data.indexOf(element), 1);
                     });
@@ -90955,10 +90959,15 @@ var render = function() {
             _c(
               "router-link",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary text-lg-right",
                 attrs: { to: { path: "/place/create" } }
               },
-              [_vm._v("Nuevo")]
+              [
+                _c("span", { staticClass: "btn-inner--icon" }, [
+                  _c("i", { staticClass: "ni ni-fat-add" })
+                ]),
+                _vm._v("Agregar\n                ")
+              ]
             )
           ],
           1
@@ -90974,7 +90983,7 @@ var render = function() {
                 expression: "search"
               }
             ],
-            staticClass: "form-control col-md-5",
+            staticClass: "form-control col-md-6",
             attrs: {
               type: "text",
               id: "search",
@@ -91001,86 +91010,88 @@ var render = function() {
         _c("table", { staticClass: "table align-items-center table-flush" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.places.data, function(place) {
-              return _c("tr", { key: place.id }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _c("div", { staticClass: "media align-items-center" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "avatar rounded-circle mr-3",
-                        attrs: { href: "#" }
-                      },
-                      [
-                        _c("img", {
-                          attrs: {
-                            alt: "Image placeholder",
-                            src: "/images/places/" + place.foto
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1, true)
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(place.nombre))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(place.descripcion))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(place.encargado))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(place.extension))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _c("div", { staticClass: "dropdown" }, [
-                    _vm._m(2, true),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "dropdown-menu dropdown-menu-right dropdown-menu-arrow"
-                      },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item text-success",
-                            attrs: {
-                              to: {
-                                name: "place-edit",
-                                params: { id: place.id }
-                              }
-                            }
-                          },
-                          [_vm._v("Editar")]
-                        ),
-                        _vm._v(" "),
+          _vm.places.data.length !== 0
+            ? _c(
+                "tbody",
+                _vm._l(_vm.places.data, function(place) {
+                  return _c("tr", { key: place.id }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _c("div", { staticClass: "media align-items-center" }, [
                         _c(
                           "a",
                           {
-                            staticClass: "dropdown-item text-danger",
-                            on: {
-                              click: function($event) {
-                                return _vm.onDelete(place.id, place)
-                              }
-                            }
+                            staticClass: "avatar rounded-circle mr-3",
+                            attrs: { href: "#" }
                           },
-                          [_vm._v("Eliminar")]
+                          [
+                            _c("img", {
+                              attrs: {
+                                alt: "Image placeholder",
+                                src: "/images/places/" + place.foto
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(1, true)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(place.nombre))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(place.descripcion))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(place.encargado))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(place.extension))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-right" }, [
+                      _c("div", { staticClass: "dropdown" }, [
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "dropdown-menu dropdown-menu-right dropdown-menu-arrow"
+                          },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "dropdown-item text-success",
+                                attrs: {
+                                  to: {
+                                    name: "place-edit",
+                                    params: { id: place.id }
+                                  }
+                                }
+                              },
+                              [_vm._v("Editar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "dropdown-item text-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onDelete(place.id, place)
+                                  }
+                                }
+                              },
+                              [_vm._v("Eliminar")]
+                            )
+                          ],
+                          1
                         )
-                      ],
-                      1
-                    )
+                      ])
+                    ])
                   ])
-                ])
-              ])
-            }),
-            0
-          )
+                }),
+                0
+              )
+            : _c("tr", [_vm._m(3)])
         ])
       ]),
       _vm._v(" "),
@@ -91147,6 +91158,12 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "fas fa-ellipsis-v" })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("No se encontrarón resultados")])])
   }
 ]
 render._withStripped = true
@@ -91329,7 +91346,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             this.$validator.validateAll().then(function (result) {
-
                 if (result) {
                     _this.$axios.post('/place', _this.form).then(function () {
                         _this.$swal(toastSuccess);
@@ -91908,8 +91924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        var url = '/place/'.concat(this.$route.params.id).concat('/edit');
-        this.$axios.get(url).then(function (response) {
+        this.$axios.get('/place/' + this.$route.params.id + '/edit').then(function (response) {
             _this.form = response.data;
             _this.form.foto = null;
         });
@@ -91933,10 +91948,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.$validator.validateAll().then(function (result) {
-
                 if (result) {
-                    var url = '/place/'.concat(_this2.$route.params.id);
-                    _this2.$axios.patch(url, _this2.form).then(function () {
+                    _this2.$axios.patch('/place/' + _this2.$route.params.id, _this2.form).then(function () {
                         _this2.$swal(toastSuccess);
                         _this2.$router.push({ name: 'place-index' });
                     });

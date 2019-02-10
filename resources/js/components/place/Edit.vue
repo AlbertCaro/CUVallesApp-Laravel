@@ -95,19 +95,20 @@
             }
         },
         created(){
-            let url = '/place/'.concat(this.$route.params.id).concat('/edit');
-            this.$axios.get(url).then(response => {
+            this.$axios.get(`/place/${this.$route.params.id}/edit`).then(response => {
                 this.form = response.data;
                 this.form.foto = null;
             });
         },
         methods: {
+
             onImageChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
                     return;
                 this.createImage(files[0]);
             },
+
             createImage(file) {
                 let reader = new FileReader();
                 let vm = this;
@@ -116,12 +117,11 @@
                 };
                 reader.readAsDataURL(file);
             },
+
             onUpdate(){
                 this.$validator.validateAll().then((result) => {
-
                     if (result) {
-                        let url = '/place/'.concat(this.$route.params.id);
-                        this.$axios.patch(url, this.form).then(() => {
+                        this.$axios.patch(`/place/${this.$route.params.id}`, this.form).then(() => {
                             this.$swal(toastSuccess);
                             this.$router.push({name:'place-index'});
                         });

@@ -98,12 +98,14 @@
             }
         },
         methods: {
+
             onImageChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
                     return;
                 this.createImage(files[0]);
             },
+
             createImage(file) {
                 let reader = new FileReader();
                 let vm = this;
@@ -112,15 +114,14 @@
                 };
                 reader.readAsDataURL(file);
             },
+
             onCreate() {
                 this.$validator.validateAll().then((result) => {
-
                     if (result) {
                         this.$axios.post('/place', this.form).then(() => {
                             this.$swal(toastSuccess);
                             this.$router.push({name: 'place-index'});
                         });
-
                     } else
                         this.$swal(toastError);
                 });

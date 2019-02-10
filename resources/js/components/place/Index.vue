@@ -3,10 +3,12 @@
         <div class="card shadow">
             <div class="card-header border-0">
                 <div class="text-lg-right">
-                    <router-link class="btn btn-primary" :to="{path: '/place/create'}">Nuevo</router-link>
+                    <router-link class="btn btn-primary text-lg-right" :to="{path: '/place/create'}">
+                        <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>Agregar
+                    </router-link>
                 </div>
                 <div class="form-group align-content-end">
-                    <input type="text" id="search" name="search" class="form-control col-md-5" placeholder="buscar..."
+                    <input type="text" id="search" name="search" class="form-control col-md-6" placeholder="buscar..."
                            v-model="search"
                            v-on:keyup="onSearch">
                 </div>
@@ -24,7 +26,7 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-if="places.data.length !== 0">
                     <tr v-for="place in places.data" :key="place.id">
                         <th scope="row">
                             <div class="media align-items-center">
@@ -53,6 +55,9 @@
                         </td>
                     </tr>
                     </tbody>
+                    <tr v-else>
+                        <td><strong>No se encontrarón resultados</strong></td>
+                    </tr>
                 </table>
             </div>
             <div class="card-footer py-4">
@@ -77,28 +82,31 @@
             this.getResults();
         },
         methods: {
+
             onDelete(id, element){
                 this.$swal(swalConfirmDelete).then(result =>{
                     if (result.value){
-                        let url = '/place/'.concat(id);
-                        this.$axios.delete(url).then(()=>{
+                        this.$axios.delete(`/place/${id}`).then(()=>{
                             this.$swal(toastDelete);
-                            this.places.data.splice(this.places.data.indexOf(element), 1)
+                            this.places.data.splice(this.places.data.indexOf(element), 1);
                         })
                     }
                 });
             },
+
             getResults(page = 1){
                 this.$axios.get(`/place?page=${page}`).then(response => {
                     this.places = response.data;
                 });
             },
+
             onSearch(){
                 if (this.search !=='')
                     this.$axios.get(`/place/search/${this.search}`).then(response => { this.places = response.data; });
                 else
                     this.getResults();
-            }
+            },
+
         }
     }
 </script>
